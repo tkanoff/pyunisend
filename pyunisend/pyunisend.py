@@ -12,10 +12,12 @@ except ImportError:
 class PyUniSend(object):
     errorMessage = ''
     errorCode = ''
+    verbose = False
 
     def __init__(self, api_key='', lang='ru',
                  secure=False, format='json',
-                 test_mode=False, extra_params={}):
+                 test_mode=False, extra_params={},
+                 verbose=False):
         """
         Cache API key, lang, secure, format and address.
         """
@@ -24,6 +26,7 @@ class PyUniSend(object):
         self.secure = secure
         self.format = format
         self.test_mode = test_mode
+        self.verbose = verbose
 
         self.default_params = {'api_key': api_key,
                                'format': format,
@@ -37,6 +40,9 @@ class PyUniSend(object):
             self.base_api_url = 'http://api.unisender.com/%s/api/' % self.lang
 
     def call(self, method, params={}):
+        if self.verbose:
+            print params
+
         url = self.base_api_url + method
         params.update(self.default_params)
 
